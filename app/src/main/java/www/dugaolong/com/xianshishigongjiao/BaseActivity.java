@@ -21,12 +21,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static www.dugaolong.com.xianshishigongjiao.MainActivity.INT_ACCESS_FINE_LOCATION;
 
 
 /**
  * activity基类
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity
+        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static Activity instance;
     private String session;
@@ -109,12 +113,19 @@ public abstract class BaseActivity extends AppCompatActivity {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
             }
         }
-        if (Build.VERSION.SDK_INT >= 23) {
-            int checkPermission = ContextCompat.checkSelfPermission(BaseActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
-            if (checkPermission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(BaseActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-                ActivityCompat.requestPermissions(BaseActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                Log.d("TTTT", "弹出提示");
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            int checkPermission = ContextCompat.checkSelfPermission(BaseActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION);
+//            if (checkPermission != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(BaseActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+//                ActivityCompat.requestPermissions(BaseActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+//                Log.d("TTTT", "弹出提示");
+//            }
+//        }
+
+        //请求权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// ANDROID6.0 请求权限
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, INT_ACCESS_FINE_LOCATION);
             }
         }
 
@@ -135,25 +146,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         String runningActivityName = MyApplication.getInstance().getRunningActivityName();
         Log.i("currentActivity:", "当前所在的Activity为:" + runningActivityName);
     }
-//
-//    @Override
-//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        super.onSaveInstanceState(outState, outPersistentState);
-//        outState.putSerializable("role", role);
-//        outState.putString("session", APPPreferenceUtil.getInstance().getSession());
-//    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        if (savedInstanceState != null) {
-//            role = (Role) savedInstanceState.getSerializable("role");
-//            session = savedInstanceState.getString("session");
-//            APPPreferenceUtil.getInstance().setSession(session);
-//            ((kgApplication) this.getApplication()).setRole(role);
-//
-//        }
-//    }
 
     /**
      * 设置内容区域
@@ -273,5 +265,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void finishAll(){
         // 结束所有的Activity
         ActivityManager.getAppManager().finishAllActivity();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case 1:
+                if (requestCode == INT_ACCESS_FINE_LOCATION) {
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        // Permission Granted
+                        Toast.makeText(this,"You Granted the permission",Toast.LENGTH_LONG).show();
+                    } else {
+                        // Permission Denied
+                        Toast.makeText(this,"You denied the permission",Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            default:
+        }
     }
 }

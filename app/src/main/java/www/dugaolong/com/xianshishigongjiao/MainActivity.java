@@ -1,14 +1,10 @@
 package www.dugaolong.com.xianshishigongjiao;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
@@ -17,7 +13,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 /**
  * Created by dugaolong on 17/3/13.
@@ -39,13 +34,7 @@ public class MainActivity extends BaseActivity
         mContext = this;
         setContentView(R.layout.webview_layout);
         super.hideTitle(0);
-        //请求权限
-        int sdkInt = Build.VERSION.SDK_INT;
-        if (sdkInt >= Build.VERSION_CODES.M) {// ANDROID6.0 请求权限
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, INT_ACCESS_FINE_LOCATION);
-            }
-        }
+
 
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -110,24 +99,7 @@ public class MainActivity extends BaseActivity
         super.onResume();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case 1:
-                if (requestCode == INT_ACCESS_FINE_LOCATION) {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        // Permission Granted
-                        Toast.makeText(this,"You Granted the permission",Toast.LENGTH_LONG).show();
-                    } else {
-                        // Permission Denied
-                        Toast.makeText(this,"You denied the permission",Toast.LENGTH_LONG).show();
-                    }
-                }
-                break;
-            default:
-        }
-    }
+
 
     @Override
     protected void findWidgets() {
