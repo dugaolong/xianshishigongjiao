@@ -30,7 +30,7 @@ public class SplashAdActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashad);
         ViewGroup container = (ViewGroup) findViewById(R.id.splash_ad_container);
-        SplashAd splashAd = new SplashAd(this, container, new SplashAdListener() {
+        SplashAd splashAd = new SplashAd(this, container, R.drawable.splash_default_picture,new SplashAdListener() {
             @Override
             public void onAdPresent() {
                 // 开屏广告展示
