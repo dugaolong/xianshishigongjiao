@@ -5,7 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
@@ -13,6 +16,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+
+import com.xiaomi.ad.SplashAdListener;
+import com.xiaomi.ad.adView.SplashAd;
 
 /**
  * Created by dugaolong on 17/3/13.
@@ -27,6 +33,10 @@ public class MainActivity extends BaseActivity
     private WebView webView;//系统自带的WebView
     private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
     LinearLayout ll_tencent;
+    private ViewGroup mContainer;
+    private static final String TAG = "MainActivity";
+    //以下的POSITION_ID 需要使用您申请的值替换下面内容
+    private static final String POSITION_ID = "bcaa805adf045251f7bc7f815d0874b5";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,33 @@ public class MainActivity extends BaseActivity
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
+
+        mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
+        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
+            @Override
+            public void onAdPresent() {
+                // 开屏广告展示
+                Log.d(TAG, "onAdPresent");
+            }
+
+            @Override
+            public void onAdClick() {
+                //用户点击了开屏广告
+                Log.d(TAG, "onAdClick");
+            }
+
+            @Override
+            public void onAdDismissed() {
+                //这个方法被调用时，表示从开屏广告消失。
+                Log.d(TAG, "onAdDismissed");
+            }
+
+            @Override
+            public void onAdFailed(String s) {
+                Log.d(TAG, "onAdFailed, message: " + s);
+            }
+        });
+        splashAd.requestAd(POSITION_ID);
     }
 
     private void initView() {
@@ -87,6 +124,17 @@ public class MainActivity extends BaseActivity
         return super.onKeyDown(keyCode, event);
     }
 
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            // 捕获back键，在展示广告期间按back键，不跳过广告
+            if (mContainer.getVisibility() == View.VISIBLE) {
+                return true;
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
