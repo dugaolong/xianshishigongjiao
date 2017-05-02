@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,8 +24,8 @@ import com.xiaomi.ad.adView.SplashAd;
  */
 
 public class MainActivity extends BaseActivity
-//{
-        implements ActivityCompat.OnRequestPermissionsResultCallback{
+{
+//        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static final int INT_ACCESS_FINE_LOCATION = 1;
     private Context mContext;

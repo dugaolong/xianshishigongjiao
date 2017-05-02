@@ -273,14 +273,17 @@ public abstract class BaseActivity extends AppCompatActivity
         switch (requestCode){
             case 1:
                 if (requestCode == INT_ACCESS_FINE_LOCATION) {
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        // Permission Granted
+                    if(grantResults.length>0){
+                        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                            // Permission Granted
 //                        Toast.makeText(this,"You Granted the permission",Toast.LENGTH_LONG).show();
-                    } else {
-                        // Permission Denied
+                        } else {
+                            // Permission Denied
 //                        Toast.makeText(this,"You denied the permission",Toast.LENGTH_LONG).show();
-                        Toast.makeText(this,"您禁止了地理位置权限!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(this,"您禁止了地理位置权限!",Toast.LENGTH_LONG).show();
+                        }
                     }
+
                 }
                 break;
             default:
