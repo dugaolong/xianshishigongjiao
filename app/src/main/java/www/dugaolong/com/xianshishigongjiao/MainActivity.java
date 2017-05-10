@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-
-import com.xiaomi.ad.SplashAdListener;
-import com.xiaomi.ad.adView.SplashAd;
 
 /**
  * Created by dugaolong on 17/3/13.
@@ -35,7 +31,7 @@ public class MainActivity extends BaseActivity
     private ViewGroup mContainer;
     private static final String TAG = "MainActivity";
     //以下的POSITION_ID 需要使用您申请的值替换下面内容
-    private static final String POSITION_ID = "bcaa805adf045251f7bc7f815d0874b5";
+    private static final String POSITION_ID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,31 +46,7 @@ public class MainActivity extends BaseActivity
         initView();
 
         mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
-        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
-            @Override
-            public void onAdPresent() {
-                // 开屏广告展示
-                Log.d(TAG, "onAdPresent");
-            }
 
-            @Override
-            public void onAdClick() {
-                //用户点击了开屏广告
-                Log.d(TAG, "onAdClick");
-            }
-
-            @Override
-            public void onAdDismissed() {
-                //这个方法被调用时，表示从开屏广告消失。
-                Log.d(TAG, "onAdDismissed");
-            }
-
-            @Override
-            public void onAdFailed(String s) {
-                Log.d(TAG, "onAdFailed, message: " + s);
-            }
-        });
-        splashAd.requestAd(POSITION_ID);
     }
 
     private void initView() {
