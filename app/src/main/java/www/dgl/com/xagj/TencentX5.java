@@ -1,4 +1,4 @@
-package www.dugaolong.com.xianshishigongjiao;
+package www.dgl.com.xagj;
 
 
 import android.app.Dialog;
@@ -31,7 +31,7 @@ public class TencentX5 extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tencent_x5);
         mContext = this;
-        super.hideTitle(0);
+        super.hideTitle();
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();

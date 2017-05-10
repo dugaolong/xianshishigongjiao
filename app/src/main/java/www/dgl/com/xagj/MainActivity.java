@@ -1,12 +1,10 @@
-package www.dugaolong.com.xianshishigongjiao;
+package www.dgl.com.xagj;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
@@ -28,24 +26,21 @@ public class MainActivity extends BaseActivity
     private WebView webView;//系统自带的WebView
     private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
     LinearLayout ll_tencent;
-    private ViewGroup mContainer;
     private static final String TAG = "MainActivity";
-    //以下的POSITION_ID 需要使用您申请的值替换下面内容
-    private static final String POSITION_ID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.webview_layout);
-        super.hideTitle(0);
+        super.hideTitle();
 
 
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
 
-        mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
+
 
     }
 
@@ -99,10 +94,7 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            // 捕获back键，在展示广告期间按back键，不跳过广告
-            if (mContainer.getVisibility() == View.VISIBLE) {
-                return true;
-            }
+
         }
         return super.dispatchKeyEvent(event);
     }

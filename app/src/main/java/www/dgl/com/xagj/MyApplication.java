@@ -1,4 +1,4 @@
-package www.dugaolong.com.xianshishigongjiao;
+package www.dgl.com.xagj;
 
 import android.app.Application;
 import android.content.Context;

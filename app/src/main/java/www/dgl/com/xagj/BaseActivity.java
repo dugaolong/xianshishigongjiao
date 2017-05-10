@@ -1,4 +1,4 @@
-package www.dugaolong.com.xianshishigongjiao;
+package www.dgl.com.xagj;
 
 import android.Manifest;
 import android.app.Activity;
@@ -23,7 +23,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static www.dugaolong.com.xianshishigongjiao.MainActivity.INT_ACCESS_FINE_LOCATION;
+import net.youmi.android.nm.sp.SpotManager;
+
+import static www.dgl.com.xagj.MainActivity.INT_ACCESS_FINE_LOCATION;
 
 
 /**
@@ -183,7 +185,7 @@ public abstract class BaseActivity extends AppCompatActivity
     /**
      * 隐藏标题栏
      */
-    public void hideTitle(int colorRes) {
+    public void hideTitle() {
         rl_common_title.setVisibility(View.GONE);
 //        setRootTopColor(colorRes);
     }
@@ -206,6 +208,9 @@ public abstract class BaseActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
 //        OkHttpProxy.cancel(OkHttpManager.getInstance());
+
+        //youmi:在应用的退出逻辑里面调用此接口。
+        SpotManager.getInstance(mContext).onAppExit();
         // 结束Activity&从堆栈中移除
         ActivityManager.getAppManager().finishActivity(this);
     }
