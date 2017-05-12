@@ -27,7 +27,7 @@ public class SplashActivity extends BaseActivity {
         mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
 
         //有米广告初始化
-        AdManager.getInstance(mContext).init("55747da8a977b7eb", "2bc9a7d896756b7e", true);
+        AdManager.getInstance(mContext).init("55747da8a977b7eb", "2bc9a7d896756b7e", false);
         SplashViewSettings splashViewSettings = new SplashViewSettings();//实例化开屏广告设置类¶
         splashViewSettings.setAutoJumpToTargetWhenShowFailed(true);//设置展示失败是否自动跳转至设定的窗口¶
         splashViewSettings.setTargetClass(MainActivity.class);//设置开屏结束后跳转的窗口
