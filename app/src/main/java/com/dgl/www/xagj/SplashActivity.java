@@ -1,4 +1,4 @@
-package www.dgl.com.xagj;
+package com.dgl.www.xagj;
 
 import android.os.Bundle;
 import android.util.Log;

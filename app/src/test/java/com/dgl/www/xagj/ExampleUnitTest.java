@@ -1,4 +1,4 @@
-package www.dgl.com.xagj;
+package com.dgl.www.xagj;
 
 import org.junit.Test;
 

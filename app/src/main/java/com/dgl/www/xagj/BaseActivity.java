@@ -1,4 +1,4 @@
-package www.dgl.com.xagj;
+package com.dgl.www.xagj;
 
 import android.Manifest;
 import android.app.Activity;
@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import net.youmi.android.nm.sp.SpotManager;
 
-import static www.dgl.com.xagj.MainActivity.INT_ACCESS_FINE_LOCATION;
+import static com.dgl.www.xagj.MainActivity.INT_ACCESS_FINE_LOCATION;
 
 
 /**
