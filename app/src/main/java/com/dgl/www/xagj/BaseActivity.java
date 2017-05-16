@@ -23,7 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.youmi.android.nm.sp.SpotManager;
 
 import static com.dgl.www.xagj.MainActivity.INT_ACCESS_FINE_LOCATION;
 
@@ -209,8 +208,6 @@ public abstract class BaseActivity extends AppCompatActivity
         super.onDestroy();
 //        OkHttpProxy.cancel(OkHttpManager.getInstance());
 
-        //youmi:在应用的退出逻辑里面调用此接口。
-        SpotManager.getInstance(mContext).onAppExit();
         // 结束Activity&从堆栈中移除
         ActivityManager.getAppManager().finishActivity(this);
     }

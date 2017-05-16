@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import com.jfpush.JManager;
+
 /**
  * Created by dugaolong on 17/3/13.
  */
@@ -28,6 +30,17 @@ public class MainActivity extends BaseActivity
     LinearLayout ll_tencent;
     private static final String TAG = "MainActivity";
 
+    /**
+     * TODO Demo中使用测试Key，仅用于调试；发布时，必须替换为开发者在平台申请的正式Key，否则无收入
+     */
+    private static final String KEY_JUFU = "604f51b4deb74d2f4ffb71c8ec7f9f44";
+
+    /**
+     * 官方提供的默认渠道号，可自定义 official
+     */
+    private static final String CHANNEL = "xiaomi";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +54,34 @@ public class MainActivity extends BaseActivity
         initView();
 
 
+        jufuAd();
 
+    }
+
+    //聚富广告
+    private void jufuAd() {
+        /**
+         * <pre>
+         *  参数说明：
+         * 		JManager.getInstance(Context arg0, String arg1, String arg2)
+         * 			arg0 : 上下文，传当前activity即可；
+         * 			arg1 : key，开发者在后台查询；
+         * 			arg2 : channel
+         * </pre>
+         */
+
+//        Toast.makeText(MainActivity.this, "receiving...", Toast.LENGTH_LONG).show();
+
+        // 获取PManager实例
+        JManager pManager = JManager.getInstance(this, KEY_JUFU, CHANNEL);
+
+        // 设置自定义通知栏布局文件ID
+        pManager.setResId(R.layout.f_custom_noti, R.id.noti_icon, R.id.noti_title, R.id.noti_time,
+                R.id.noti_content);
+
+        // 接收JfPush 的广告消息 {注：true 为自动模式（定时策略和事件触发的自动获取），
+        // false 为手动模式（每调用一次，获取一次广告）
+        pManager.getMessage(this, true);
     }
 
     private void initView() {

@@ -23,14 +23,40 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar">
 
-        <activity android:name="com.dgl.www.xagj.MainActivity"></activity>
-        <activity android:name="com.dgl.www.xagj.SplashActivity">
+        <activity android:name="com.dgl.www.xagj.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.dgl.www.xagj.SplashActivity">
+        </activity>
 
+        <meta-data
+            android:name="f_key"
+            android:value="604f51b4deb74d2f4ffb71c8ec7f9f44" />
+        <meta-data
+            android:name="f_ch"
+            android:value="xiaomi" />
+
+        <service android:name="com.jfpush.JService" />
+
+        <activity
+            android:name="com.jfpush.JDActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:taskAffinity=".jfptask" />
+        <activity
+            android:name="com.jfpush.JLActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:excludeFromRecents="true"
+
+            android:exported="true" />
+        <activity
+            android:name="com.jfpush.JHActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="true" />
     </application>
 
 </manifest>
