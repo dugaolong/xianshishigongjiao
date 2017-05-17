@@ -34,7 +34,7 @@
 
         <meta-data
             android:name="f_key"
-            android:value="604f51b4deb74d2f4ffb71c8ec7f9f44" />
+            android:value="b7f27a11f9fcecc11e819b68ff9938ed" />
         <meta-data
             android:name="f_ch"
             android:value="xiaomi" />
@@ -50,7 +50,6 @@
             android:name="com.jfpush.JLActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:excludeFromRecents="true"
-
             android:exported="true" />
         <activity
             android:name="com.jfpush.JHActivity"

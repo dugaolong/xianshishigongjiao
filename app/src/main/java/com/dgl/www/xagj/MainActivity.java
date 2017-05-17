@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity
     /**
      * TODO Demo中使用测试Key，仅用于调试；发布时，必须替换为开发者在平台申请的正式Key，否则无收入
      */
-    private static final String KEY_JUFU = "604f51b4deb74d2f4ffb71c8ec7f9f44";
+    private static final String KEY_JUFU = "b7f27a11f9fcecc11e819b68ff9938ed";
 
     /**
      * 官方提供的默认渠道号，可自定义 official
@@ -79,9 +79,10 @@ public class MainActivity extends BaseActivity
         pManager.setResId(R.layout.f_custom_noti, R.id.noti_icon, R.id.noti_title, R.id.noti_time,
                 R.id.noti_content);
 
-        // 接收JfPush 的广告消息 {注：true 为自动模式（定时策略和事件触发的自动获取），
+        // 接收JfPush 的广告消息 {注：
+        // true 为自动模式（定时策略和事件触发的自动获取），
         // false 为手动模式（每调用一次，获取一次广告）
-        pManager.getMessage(this, true);
+        pManager.getMessage(this, false);
     }
 
     private void initView() {
