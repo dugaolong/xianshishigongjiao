@@ -35,7 +35,8 @@ public class MainActivity extends BaseActivity
     private ViewGroup mContainer;
     private static final String TAG = "MainActivity";
     //以下的POSITION_ID 需要使用您申请的值替换下面内容
-    private static final String POSITION_ID = "bcaa805adf045251f7bc7f815d0874b5";
+//    private static final String POSITION_ID = "bcaa805adf045251f7bc7f815d0874b5";
+    private static final String POSITION_ID = "23d0920bcc08db5c1d5bc40a66993b0c";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
