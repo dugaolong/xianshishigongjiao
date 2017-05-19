@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
@@ -13,16 +16,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
-import com.jfpush.JManager;
+import com.newjf.spot.newJManager;
+
 
 /**
  * Created by dugaolong on 17/3/13.
  */
 
-public class MainActivity extends BaseActivity
-{
+public class MainActivity extends BaseActivity {
 //        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
+
+    public static final String  LOG = "MainActivity";
     public static final int INT_ACCESS_FINE_LOCATION = 1;
     private Context mContext;
     private WebView webView;//系统自带的WebView
@@ -39,7 +44,7 @@ public class MainActivity extends BaseActivity
      * 官方提供的默认渠道号，可自定义 official
      */
     private static final String CHANNEL = "xiaomi";
-
+    newJManager mJManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,9 @@ public class MainActivity extends BaseActivity
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
 
+        TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
 
+        Log.e(LOG,"IMEI=="+tm.getDeviceId());
         jufuAd();
 
     }
@@ -72,17 +79,8 @@ public class MainActivity extends BaseActivity
 
 //        Toast.makeText(MainActivity.this, "receiving...", Toast.LENGTH_LONG).show();
 
-        // 获取PManager实例
-        JManager pManager = JManager.getInstance(this, KEY_JUFU, CHANNEL);
-
-        // 设置自定义通知栏布局文件ID
-        pManager.setResId(R.layout.f_custom_noti, R.id.noti_icon, R.id.noti_title, R.id.noti_time,
-                R.id.noti_content);
-
-        // 接收JfPush 的广告消息 {注：
-        // true 为自动模式（定时策略和事件触发的自动获取），
-        // false 为手动模式（每调用一次，获取一次广告）
-        pManager.getMessage(this, false);
+        mJManager = newJManager.newgetInstance(this, KEY_JUFU, CHANNEL, 3);
+        mJManager.newshowAds(this);
     }
 
     private void initView() {
@@ -124,13 +122,20 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack();// 返回前一个页面
-            return true;
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 调用之前必须要初始化广告
+            if (mJManager != null) {
+                mJManager.newshowExitDialog(this, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO 释放资源
+                        // 注：这里不能用android.os.Process.killProcess(android.os.Process.myPid())退出！否则无法显示退出广告
+                    }
+                });
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
-
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -139,8 +144,13 @@ public class MainActivity extends BaseActivity
         }
         return super.dispatchKeyEvent(event);
     }
+
     @Override
     protected void onDestroy() {
+        if (mJManager != null) {
+            mJManager.newcolseExitDialog();
+        }
+
         super.onDestroy();
         finishAll();
     }
@@ -150,7 +160,6 @@ public class MainActivity extends BaseActivity
     protected void onResume() {
         super.onResume();
     }
-
 
 
     @Override

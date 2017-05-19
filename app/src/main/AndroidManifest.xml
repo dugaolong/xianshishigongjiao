@@ -29,8 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.dgl.www.xagj.SplashActivity">
-        </activity>
+        <activity android:name="com.dgl.www.xagj.SplashActivity"></activity>
 
         <meta-data
             android:name="f_key"
@@ -39,23 +38,15 @@
             android:name="f_ch"
             android:value="xiaomi" />
 
-        <service android:name="com.jfpush.JService" />
+        <activity
+            android:name="com.newjf.spot.newJActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=".jfstask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <service android:name="com.newjf.spot.newJService" />
 
-        <activity
-            android:name="com.jfpush.JDActivity"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:taskAffinity=".jfptask" />
-        <activity
-            android:name="com.jfpush.JLActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:excludeFromRecents="true"
-            android:exported="true" />
-        <activity
-            android:name="com.jfpush.JHActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:excludeFromRecents="true"
-            android:exported="true" />
     </application>
 
 </manifest>
