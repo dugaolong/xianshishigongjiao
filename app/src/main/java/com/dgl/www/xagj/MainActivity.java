@@ -53,7 +53,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.webview_layout);
         super.hideTitle();
 
-
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
