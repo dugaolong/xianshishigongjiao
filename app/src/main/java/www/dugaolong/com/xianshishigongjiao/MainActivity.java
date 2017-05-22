@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity
 {
 //        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
-    public static final int INT_ACCESS_FINE_LOCATION = 1;
+
     private Context mContext;
     private WebView webView;//系统自带的WebView
     private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
@@ -38,7 +38,8 @@ public class MainActivity extends BaseActivity
     private static final String TAG = "MainActivity";
     //以下的POSITION_ID 需要使用您申请的值替换下面内容
 //    private static final String POSITION_ID = "bcaa805adf045251f7bc7f815d0874b5";
-    private static final String POSITION_ID = "23d0920bcc08db5c1d5bc40a66993b0c";
+//    private static final String POSITION_ID = "23d0920bcc08db5c1d5bc40a66993b0c";
+    private static final String POSITION_ID = "be5546ea85bd8f879bebcf1aaea0c401";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

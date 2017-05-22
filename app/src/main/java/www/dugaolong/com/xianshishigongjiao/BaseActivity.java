@@ -23,14 +23,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static www.dugaolong.com.xianshishigongjiao.MainActivity.INT_ACCESS_FINE_LOCATION;
-
 
 /**
  * activity基类
  */
 public abstract class BaseActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback{
+
+    public static final int INT_ACCESS_FINE_LOCATION = 1;
 
     public static Activity instance;
     private String session;
