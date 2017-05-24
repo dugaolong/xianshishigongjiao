@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
@@ -16,7 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
-import com.newjf.spot.newJManager;
+import dugaolong.JdglManager;
 
 
 /**
@@ -44,7 +43,7 @@ public class MainActivity extends BaseActivity {
      * 官方提供的默认渠道号，可自定义 official
      */
     private static final String CHANNEL = "xiaomi";
-    newJManager mJManager;
+    JdglManager mJManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +77,8 @@ public class MainActivity extends BaseActivity {
 
 //        Toast.makeText(MainActivity.this, "receiving...", Toast.LENGTH_LONG).show();
 
-        mJManager = newJManager.newgetInstance(this, KEY_JUFU, CHANNEL, 3);
-        mJManager.newshowAds(this);
+        mJManager = JdglManager.getdglInstance(this, KEY_JUFU, CHANNEL, 3);
+        mJManager.showdglAds(this);
     }
 
     private void initView() {
@@ -122,16 +121,16 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // 调用之前必须要初始化广告
-            if (mJManager != null) {
-                mJManager.newshowExitDialog(this, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // TODO 释放资源
-                        // 注：这里不能用android.os.Process.killProcess(android.os.Process.myPid())退出！否则无法显示退出广告
-                    }
-                });
-            }
+//            // 调用之前必须要初始化广告
+//            if (mJManager != null) {
+//                mJManager.sh.newshowExitDialog(this, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        // TODO 释放资源
+//                        // 注：这里不能用android.os.Process.killProcess(android.os.Process.myPid())退出！否则无法显示退出广告
+//                    }
+//                });
+//            }
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -146,9 +145,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        if (mJManager != null) {
-            mJManager.newcolseExitDialog();
-        }
+//        if (mJManager != null) {
+//            mJManager.newcolseExitDialog();
+//        }
 
         super.onDestroy();
         finishAll();

@@ -15,6 +15,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
+    <!-- 允许一个程序打开窗口使用,悬浮窗 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 添加快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+
     <application
         android:name="com.dgl.www.xagj.MyApplication"
         android:allowBackup="true"
@@ -38,14 +43,31 @@
             android:name="f_ch"
             android:value="xiaomi" />
 
+        <!-- import start  android:launchMode="singleTask" -->
+
         <activity
-            android:name="com.newjf.spot.newJActivity"
+            android:name="dugaolong.JSdglActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:taskAffinity=".jfstask"
+            android:taskAffinity=".s"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <service android:name="com.newjf.spot.newJService" />
+
+        <service android:name="dugaolong.JdglService" />
+
+        <activity
+            android:name="dugaolong.JQdglActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=".q" >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- import end -->
 
     </application>
 
