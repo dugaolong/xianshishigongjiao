@@ -2,9 +2,12 @@ package www.dugaolong.com.xianshishigongjiao;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
@@ -12,11 +15,13 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.qq.e.ads.splash.SplashAD;
+import com.alimama.mobile.sdk.MmuSDK;
+import com.alimama.mobile.sdk.config.InsertController;
+import com.alimama.mobile.sdk.config.InsertProperties;
+import com.alimama.mobile.sdk.config.MmuController;
+import com.alimama.mobile.sdk.config.MmuSDKFactory;
 
 
 /**
@@ -29,17 +34,9 @@ public class MainActivity extends BaseActivity {
     private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
     LinearLayout ll_tencent;
     private static final String TAG = "MainActivity";
-    //以下的POSITION_ID 需要使用您申请的值替换下面内容
-    private static final String POSITION_ID = "4b485fd9e3e27549417817e03e531a43";//256
-    public boolean canJump = false;
-    private static final String SKIP_TEXT = "点击跳过 %d";
-    private SplashAD splashAD;
-    private ViewGroup container;
-    private TextView skipView;
-    private ImageView splashHolder;
-    public static final String APPID = "1101152570";
-    public static final String SplashPosID = "8863364436303842593";
-
+    private InsertProperties properties;
+    private InsertController<?> mController;
+    private MmuSDK mmuSDK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +44,14 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.webview_layout);
         super.hideTitle(0);
 
-        skipView = (TextView) findViewById(R.id.skip_view);
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
 
-        container = (ViewGroup) findViewById(R.id.splash_container);
-        splashHolder = (ImageView) findViewById(R.id.splash_holder);
+        ViewGroup nat = (ViewGroup) findViewById(R.id.nat);
+        String slotId = "67546";//注意：该广告位只做测试使用，请勿集成到发布版app中
+        setupAlimama(nat, slotId);
+
 
     }
 
@@ -101,20 +99,51 @@ public class MainActivity extends BaseActivity {
         finishAll();
     }
 
-
     @Override
-    protected void findWidgets() {
+    public void onBackPressed() {
+        boolean interrupt = false;
+        if (mController != null) {// 通知Banner推广返回键按下，如果Banner进行了一些UI切换将返回true
+            // 否则返回false(如从 expand状态切换会normal状态将返回true)
+            interrupt = mController.onBackPressed();
+        }
 
+        if (!interrupt)
+            super.onBackPressed();
+    }
+
+    private void setupAlimama(ViewGroup nat, String slotId) {
+        mmuSDK = MmuSDKFactory.getMmuSDK();
+        mmuSDK.init(getApplication());//初始化SDK,该方法必须保证在集成代码前调用，可移到程序入口处调用
+        mmuSDK.accountServiceInit(this);
+        properties = new InsertProperties(slotId, nat);
+        mmuSDK.attach(properties);
+
+        properties.setClickCallBackListener(new MmuController.ClickCallBackListener() {
+
+            @Override
+            public void onClick() {
+                Log.i("munion", "onclick");
+            }
+        });
+
+        properties.setOnStateChangeCallBackListener(new InsertController.OnStateChangeCallBackListener() {
+
+            @Override
+            public void onStateChanged(InsertController.InterstitialState state) {
+                Log.i("munion", "state = " + state);
+            }
+        });
+        mController =  properties.getMmuController();
     }
 
     @Override
-    protected void initComponent() {
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!mmuSDK.accountServiceHandleResult(requestCode, resultCode, data,this)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
-
-    @Override
-    protected void getIntentData() {
-
+    public void back(View v){
+        onBackPressed();
     }
 
 }

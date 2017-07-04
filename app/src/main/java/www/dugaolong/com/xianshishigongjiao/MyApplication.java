@@ -8,6 +8,8 @@ import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.alimama.mobile.sdk.config.MmuSDKFactory;
+
 import java.io.ByteArrayInputStream;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -23,16 +25,16 @@ public class MyApplication extends Application {
     public static MyApplication instance;
     private Bitmap screenShot;
     String TAG = "MyApplication";
+
     @Override
     public void onCreate() {
         super.onCreate();
         appContext = this;
         instance = this;
+        //初始化 并注册集成广告样式的Activity
+        MmuSDKFactory.getMmuSDK().init(this);
+        MmuSDKFactory.registerAcvitity(MainActivity.class);
 
-//        AdSdk.setDebugOn(); // 打开调试，输出调试信息
-//        AdSdk.setMockOn();  // 调试时打开，正式发布时关闭
-        //配置小米广告的sdk
-//        AdSdk.initialize(this, "2882303761517555679");
     }
 
     public static MyApplication getInstance() {
@@ -79,6 +81,7 @@ public class MyApplication extends Application {
         }
         return -1;
     }
+
     //debug默认签名中含有的信息
     private final static X500Principal DEBUG_DN = new X500Principal("CN=Android Debug,O=Android,C=US");
 

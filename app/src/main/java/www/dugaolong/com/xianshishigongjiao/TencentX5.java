@@ -86,19 +86,4 @@ public class TencentX5 extends BaseActivity {
 //        handler.postDelayed(runnableClose, 3000);//每3秒执行一次runnable.
     }
 
-
-    @Override
-    protected void findWidgets() {
-
-    }
-
-    @Override
-    protected void initComponent() {
-
-    }
-
-    @Override
-    protected void getIntentData() {
-
-    }
 }

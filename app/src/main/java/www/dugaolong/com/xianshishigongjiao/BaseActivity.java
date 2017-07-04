@@ -41,20 +41,6 @@ public abstract class BaseActivity extends AppCompatActivity
     protected int screenWidth;
     protected int screenHeight;
 
-    /**
-     * 初始化控件
-     */
-    protected abstract void findWidgets();
-
-    /**
-     * 初始化控件数据
-     */
-    protected abstract void initComponent();
-
-    /**
-     * 初始化数据
-     */
-    protected abstract void getIntentData();
 
     /**
      * 标题栏标题
@@ -162,9 +148,6 @@ public abstract class BaseActivity extends AppCompatActivity
         if (null != this.base_content) {
             this.base_content.addView(this.contentView);
         }
-        getIntentData();
-        findWidgets();
-        initComponent();
         initListener();
         initHandler();
         asyncRetrive();
