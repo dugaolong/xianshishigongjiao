@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
@@ -13,6 +14,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+
+import com.inmobi.ads.InMobiAdRequestStatus;
+import com.inmobi.ads.InMobiInterstitial;
+
+import java.util.Map;
 
 
 /**
@@ -41,6 +47,59 @@ public class MainActivity extends BaseActivity
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
+
+        InMobiInterstitial interstitialAd = new InMobiInterstitial(MainActivity.this, 1471550843414L, new InMobiInterstitial.InterstitialAdListener2() {
+            @Override
+            public void onAdLoadFailed(InMobiInterstitial inMobiInterstitial, InMobiAdRequestStatus inMobiAdRequestStatus) {
+                Log.i(TAG,"onAdLoadFailed");
+            }
+
+            @Override
+            public void onAdReceived(InMobiInterstitial inMobiInterstitial) {
+                Log.i(TAG,"onAdReceived");
+            }
+
+            @Override
+            public void onAdLoadSucceeded(InMobiInterstitial inMobiInterstitial) {
+                Log.i(TAG,"onAdLoadSucceeded");
+            }
+
+            @Override
+            public void onAdRewardActionCompleted(InMobiInterstitial inMobiInterstitial, Map<Object, Object> map) {
+                Log.i(TAG,"onAdRewardActionCompleted");
+            }
+
+            @Override
+            public void onAdDisplayFailed(InMobiInterstitial inMobiInterstitial) {
+                Log.i(TAG,"onAdDisplayFailed");
+            }
+
+            @Override
+            public void onAdWillDisplay(InMobiInterstitial inMobiInterstitial) {
+                Log.i(TAG,"onAdWillDisplay");
+            }
+
+            @Override
+            public void onAdDisplayed(InMobiInterstitial inMobiInterstitial) {
+                Log.i(TAG,"onAdDisplayed");
+            }
+
+            @Override
+            public void onAdInteraction(InMobiInterstitial inMobiInterstitial, Map<Object, Object> map) {
+                Log.i(TAG,"onAdInteraction");
+            }
+
+            @Override
+            public void onAdDismissed(InMobiInterstitial inMobiInterstitial) {
+                Log.i(TAG,"onAdDismissed");
+            }
+
+            @Override
+            public void onUserLeftApplication(InMobiInterstitial inMobiInterstitial) {
+                Log.i(TAG,"onUserLeftApplication");
+            }
+        });
+
 
     }
 

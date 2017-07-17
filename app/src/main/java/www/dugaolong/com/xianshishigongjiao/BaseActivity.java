@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.inmobi.sdk.InMobiSdk;
+
 
 /**
  * activity基类
@@ -122,6 +124,7 @@ public abstract class BaseActivity extends AppCompatActivity
 //            }
 //        }
 
+        InMobiSdk.init(this, "ecb4cf67175a441aa6d2580a984b5ce8"); //'this' is used specify c
         //请求权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// ANDROID6.0 请求权限
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
