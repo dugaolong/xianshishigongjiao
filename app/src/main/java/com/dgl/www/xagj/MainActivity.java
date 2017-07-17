@@ -1,22 +1,17 @@
-package www.dugaolong.com.xianshishigongjiao;
+package com.dgl.www.xagj;
 
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.qq.e.ads.splash.SplashAD;
 
 
 /**
@@ -26,19 +21,9 @@ import com.qq.e.ads.splash.SplashAD;
 public class MainActivity extends BaseActivity {
     private Context mContext;
     private WebView webView;//系统自带的WebView
-    private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
+    private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime";
     LinearLayout ll_tencent;
     private static final String TAG = "MainActivity";
-    //以下的POSITION_ID 需要使用您申请的值替换下面内容
-    private static final String POSITION_ID = "4b485fd9e3e27549417817e03e531a43";//256
-    public boolean canJump = false;
-    private static final String SKIP_TEXT = "点击跳过 %d";
-    private SplashAD splashAD;
-    private ViewGroup container;
-    private TextView skipView;
-    private ImageView splashHolder;
-    public static final String APPID = "1101152570";
-    public static final String SplashPosID = "8863364436303842593";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +32,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.webview_layout);
         super.hideTitle(0);
 
-        skipView = (TextView) findViewById(R.id.skip_view);
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
-
-        container = (ViewGroup) findViewById(R.id.splash_container);
-        splashHolder = (ImageView) findViewById(R.id.splash_holder);
-
     }
 
     private void initView() {
