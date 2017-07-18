@@ -25,8 +25,7 @@ import java.util.Map;
  * Created by dugaolong on 17/3/13.
  */
 
-public class MainActivity extends BaseActivity
-{
+public class MainActivity extends BaseActivity {
 //        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
 
@@ -35,6 +34,7 @@ public class MainActivity extends BaseActivity
     private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime";
     LinearLayout ll_tencent;
     private static final String TAG = "MainActivity";
+    private boolean mCanShowAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,64 +43,69 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.webview_layout);
         super.hideTitle(0);
 
-
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
 
-        InMobiInterstitial interstitialAd = new InMobiInterstitial(MainActivity.this, 1471550843414L, new InMobiInterstitial.InterstitialAdListener2() {
+        InMobiInterstitial interstitialAd = new InMobiInterstitial(MainActivity.this, 1501106498459l, new InMobiInterstitial.InterstitialAdListener2() {
             @Override
             public void onAdLoadFailed(InMobiInterstitial inMobiInterstitial, InMobiAdRequestStatus inMobiAdRequestStatus) {
-                Log.i(TAG,"onAdLoadFailed");
+                Log.i(TAG, "onAdLoadFailed");
+                Log.i(TAG,"getMessage==="+inMobiAdRequestStatus.getMessage());
+
             }
 
             @Override
             public void onAdReceived(InMobiInterstitial inMobiInterstitial) {
-                Log.i(TAG,"onAdReceived");
+                Log.i(TAG, "onAdReceived");
+                mCanShowAd = true;
             }
 
             @Override
             public void onAdLoadSucceeded(InMobiInterstitial inMobiInterstitial) {
-                Log.i(TAG,"onAdLoadSucceeded");
+                Log.i(TAG, "onAdLoadSucceeded");
             }
 
             @Override
             public void onAdRewardActionCompleted(InMobiInterstitial inMobiInterstitial, Map<Object, Object> map) {
-                Log.i(TAG,"onAdRewardActionCompleted");
+                Log.i(TAG, "onAdRewardActionCompleted");
             }
 
             @Override
             public void onAdDisplayFailed(InMobiInterstitial inMobiInterstitial) {
-                Log.i(TAG,"onAdDisplayFailed");
+                Log.i(TAG, "onAdDisplayFailed");
             }
 
             @Override
             public void onAdWillDisplay(InMobiInterstitial inMobiInterstitial) {
-                Log.i(TAG,"onAdWillDisplay");
+                Log.i(TAG, "onAdWillDisplay");
             }
 
             @Override
             public void onAdDisplayed(InMobiInterstitial inMobiInterstitial) {
-                Log.i(TAG,"onAdDisplayed");
+                Log.i(TAG, "onAdDisplayed");
             }
 
             @Override
             public void onAdInteraction(InMobiInterstitial inMobiInterstitial, Map<Object, Object> map) {
-                Log.i(TAG,"onAdInteraction");
+                Log.i(TAG, "onAdInteraction");
             }
 
             @Override
             public void onAdDismissed(InMobiInterstitial inMobiInterstitial) {
-                Log.i(TAG,"onAdDismissed");
+                Log.i(TAG, "onAdDismissed");
             }
 
             @Override
             public void onUserLeftApplication(InMobiInterstitial inMobiInterstitial) {
-                Log.i(TAG,"onUserLeftApplication");
+                Log.i(TAG, "onUserLeftApplication");
             }
         });
-
-
+        interstitialAd.load();
+//        if (mCanShowAd) interstitialAd.show();
+        Log.i(TAG, "interstitialAd.isReady()===="+interstitialAd.isReady());
+        if(interstitialAd.isReady())
+            interstitialAd.show();
     }
 
     private void initView() {
@@ -150,7 +155,7 @@ public class MainActivity extends BaseActivity
     }
 
 
-//    @Override
+    //    @Override
 //    public boolean dispatchKeyEvent(KeyEvent event) {
 //        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
 //            // 捕获back键，在展示广告期间按back键，不跳过广告
@@ -171,7 +176,6 @@ public class MainActivity extends BaseActivity
     protected void onResume() {
         super.onResume();
     }
-
 
 
     @Override

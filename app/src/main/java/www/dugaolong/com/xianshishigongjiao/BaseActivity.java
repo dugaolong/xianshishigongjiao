@@ -267,6 +267,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     public void finishAll(){
         // 结束所有的Activity
+        Log.e("BaseActivity"," 结束所有的Activity");
         ActivityManager.getAppManager().finishAllActivity();
     }
 
