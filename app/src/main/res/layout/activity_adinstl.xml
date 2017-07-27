@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal|bottom">
+
+    <LinearLayout
+        android:id="@+id/linelayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/requestad"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="请求插屏广告"
+            android:textColor="@color/font" />
+
+        <Button
+            android:id="@+id/showad"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/red"
+            android:text="展示广告位1"
+            android:textColor="@color/font" />
+    </LinearLayout>
+</LinearLayout>
