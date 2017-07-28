@@ -33,8 +33,6 @@ public abstract class BaseActivity extends AppCompatActivity
     public static final int INT_ACCESS_FINE_LOCATION = 1;
 
     public static Activity instance;
-    private String session;
-    public static final String formatter = "%s_%s_%s".replaceAll("_", "::");
 
     public Context mContext;
     protected DisplayMetrics metric;
@@ -205,7 +203,6 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        OkHttpProxy.cancel(OkHttpManager.getInstance());
         // 结束Activity&从堆栈中移除
         ActivityManager.getAppManager().finishActivity(this);
     }
