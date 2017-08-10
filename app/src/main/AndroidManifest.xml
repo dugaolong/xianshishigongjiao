@@ -13,7 +13,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:name="com.dgl.www.xagj.MyApplication"
@@ -23,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar">
 
-        <activity android:name="com.dgl.www.xagj.MainActivity"
+        <activity
+            android:name="com.dgl.www.xagj.SplashActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
@@ -32,7 +33,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.dgl.www.xagj.MainActivity"></activity>
 
+        <activity
+            android:name="com.meizu.adplatform.api.activity.WebSurfingActivity"
+            android:configChanges="keyboardHidden|orientation|navigation|screenSize"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+
+        <receiver android:name="com.meizu.advertise.api.AppDownloadAndInstallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
 
     </application>
 
