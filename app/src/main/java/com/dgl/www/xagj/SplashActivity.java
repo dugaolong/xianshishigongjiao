@@ -39,11 +39,13 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onNoAd(long code) {
                 Log.d(TAG, "no ad: " + code);
+                jump();
             }
 
             @Override
             public void onError(String msg) {
                 Log.d(TAG, "error: " + msg);
+                jump();
             }
 
             @Override
@@ -58,12 +60,16 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAdDismissed() {
-                // 跳转至下一个界面
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
-                finish();
+                jump();
             }
         });
+    }
+
+    private void jump() {
+        // 跳转至下一个界面
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
