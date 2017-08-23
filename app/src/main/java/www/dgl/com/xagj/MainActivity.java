@@ -1,4 +1,4 @@
-package com.dgl.www.xagj;
+package www.dgl.com.xagj;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity
         //启用数据库
         webSettings.setDatabaseEnabled(true);
         //设置定位的数据库路径
-        String dir = this.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        String dir = this.getApplicationContext().getDir("database", MODE_PRIVATE).getPath();
         webSettings.setGeolocationDatabasePath(dir);
         //启用地理定位
         webSettings.setGeolocationEnabled(true);

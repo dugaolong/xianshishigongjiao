@@ -1,4 +1,4 @@
-package com.dgl.www.xagj;
+package www.dgl.com.xagj;
 
 import android.Manifest;
 import android.app.Activity;
@@ -24,8 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.youmi.android.nm.sp.SpotManager;
-
-import static com.dgl.www.xagj.MainActivity.INT_ACCESS_FINE_LOCATION;
 
 
 /**
@@ -129,7 +127,7 @@ public abstract class BaseActivity extends AppCompatActivity
         //请求权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {// ANDROID6.0 请求权限
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, INT_ACCESS_FINE_LOCATION);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MainActivity.INT_ACCESS_FINE_LOCATION);
             }
         }
 
@@ -279,7 +277,7 @@ public abstract class BaseActivity extends AppCompatActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
             case 1:
-                if (requestCode == INT_ACCESS_FINE_LOCATION) {
+                if (requestCode == MainActivity.INT_ACCESS_FINE_LOCATION) {
                     if(grantResults.length>0){
                         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                             // Permission Granted

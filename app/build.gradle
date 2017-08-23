@@ -12,11 +12,11 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.dgl.www.xagj"
+        applicationId "www.dgl.com.xagj"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 4
-        versionName "2.2"
+        versionCode 5
+        versionName "2.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
