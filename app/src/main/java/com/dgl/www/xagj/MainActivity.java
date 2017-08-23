@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends BaseActivity
 {
-//        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     public static final int INT_ACCESS_FINE_LOCATION = 1;
     private Context mContext;
