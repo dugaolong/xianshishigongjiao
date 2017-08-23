@@ -29,10 +29,6 @@ public class MyApplication extends Application {
         appContext = this;
         instance = this;
 
-//        AdSdk.setDebugOn(); // 打开调试，输出调试信息
-//        AdSdk.setMockOn();  // 调试时打开，正式发布时关闭
-        //配置小米广告的sdk
-//        AdSdk.initialize(this, "2882303761517555679");
     }
 
     public static MyApplication getInstance() {
