@@ -47,11 +47,11 @@ android {
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 if (variant.buildType.name.equals('debug')){
-                    def fileName = "xiangongjiao_debug.apk"
+                    def fileName = "tencent_debug.apk"
                     output.outputFile = new File(outputFile.parent, fileName)
                 }else {
                     // 输出apk名称为HeJiaoYu_GD_XXX.apk
-                    def fileName = "xiangongjiao_release.apk"
+                    def fileName = "tencent_release.apk"
                     output.outputFile = new File(outputFile.parent, fileName)
                 }
             }
