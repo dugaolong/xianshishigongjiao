@@ -15,8 +15,8 @@ android {
         applicationId "www.dugaolong.com.xianshishigongjiao"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 6
-        versionName "2.4"
+        versionCode 7
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -57,7 +57,7 @@ android {
                     output.outputFile = new File(outputFile.parent, fileName)
                 }else {
                     // 输出apk名称为HeJiaoYu_GD_XXX.apk
-                    def fileName = "xiangongjiao_release.apk"
+                    def fileName = "xiaomi_release.apk"
                     output.outputFile = new File(outputFile.parent, fileName)
                 }
             }
