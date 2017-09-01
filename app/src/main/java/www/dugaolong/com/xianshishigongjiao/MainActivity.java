@@ -25,8 +25,7 @@ import com.xiaomi.ad.adView.SplashAd;
  * Created by dugaolong on 17/3/13.
  */
 
-public class MainActivity extends BaseActivity
-{
+public class MainActivity extends BaseActivity {
 //        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
 
@@ -41,7 +40,8 @@ public class MainActivity extends BaseActivity
 //    private static final String POSITION_ID = "23d0920bcc08db5c1d5bc40a66993b0c";
 //    private static final String POSITION_ID = "be5546ea85bd8f879bebcf1aaea0c401";
 //    private static final String POSITION_ID = "6d3d1a7b95d5be2bc8171fc05231ccf2";//1306
-    private static final String POSITION_ID = "4b485fd9e3e27549417817e03e531a43";//256
+//    private static final String POSITION_ID = "4b485fd9e3e27549417817e03e531a43";//256
+    private static final String POSITION_ID = "21a12924fb79381ad51b842a11c86b2d";//3108
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +140,7 @@ public class MainActivity extends BaseActivity
         }
         return super.dispatchKeyEvent(event);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -151,7 +152,6 @@ public class MainActivity extends BaseActivity
     protected void onResume() {
         super.onResume();
     }
-
 
 
     @Override
