@@ -17,7 +17,6 @@ android {
         targetSdkVersion 25
         versionCode 8
         versionName "4.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
