@@ -8,6 +8,8 @@ import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.xiaomi.ad.AdSdk;
+
 import java.io.ByteArrayInputStream;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -32,7 +34,7 @@ public class MyApplication extends Application {
 //        AdSdk.setDebugOn(); // 打开调试，输出调试信息
 //        AdSdk.setMockOn();  // 调试时打开，正式发布时关闭
         //配置小米广告的sdk
-//        AdSdk.initialize(this, "2882303761517555679");
+        AdSdk.initialize(this, "2882303761517555679");
     }
 
     public static MyApplication getInstance() {
