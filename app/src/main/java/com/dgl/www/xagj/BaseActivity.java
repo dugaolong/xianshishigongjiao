@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -141,8 +141,6 @@ public abstract class BaseActivity extends AppCompatActivity
 
         super.setContentView(R.layout.activity_base_layout);
         this.init();
-        String runningActivityName = MyApplication.getInstance().getRunningActivityName();
-        Log.i("currentActivity:", "当前所在的Activity为:" + runningActivityName);
     }
 
     /**
@@ -262,6 +260,8 @@ public abstract class BaseActivity extends AppCompatActivity
     public void finishAll(){
         // 结束所有的Activity
         ActivityManager.getAppManager().finishAllActivity();
+        Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 
     @Override

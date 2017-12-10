@@ -37,9 +37,5 @@ public class MyApplication extends Application {
     }
 
 
-    public String getRunningActivityName() {
-        android.app.ActivityManager mActivityManager = (android.app.ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        return mActivityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-    }
 
 }
