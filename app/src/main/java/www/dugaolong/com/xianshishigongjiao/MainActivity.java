@@ -1,86 +1,81 @@
 package www.dugaolong.com.xianshishigongjiao;
 
 
+import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.WindowManager;
-import android.webkit.GeolocationPermissions;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 /**
  * Created by dugaolong on 17/3/13.
  */
 
+
+
 public class MainActivity extends BaseActivity {
+
     private Context mContext;
-    private WebView webView;//系统自带的WebView
-    private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
+    com.tencent.smtt.sdk.WebView webView;//腾讯X5WebView
+    private String url = "https://www.xajtfb.cn/BusPage/bus_realtime";
+    Runnable runnableClose=null;
     LinearLayout ll_tencent;
-    private static final String TAG = "MainActivity";
+    Dialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.tencent_x5);
         mContext = this;
-        setContentView(R.layout.webview_layout);
         super.hideTitle(0);
-
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
-
-
     }
 
     private void initView() {
         ll_tencent = (LinearLayout) findViewById(R.id.ll_tencent);
-        webView = (WebView) findViewById(R.id.webview);
+        webView = (com.tencent.smtt.sdk.WebView)findViewById(R.id.tbsContent);
         webView.loadUrl(url);
-        WebSettings webSettings = webView.getSettings();
+        com.tencent.smtt.sdk.WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSavePassword(true);
-        //启用数据库
-        webSettings.setDatabaseEnabled(true);
-        //设置定位的数据库路径
-        String dir = this.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
-        webSettings.setGeolocationDatabasePath(dir);
-        //启用地理定位
         webSettings.setGeolocationEnabled(true);
-        //开启DomStorage缓存
-        webSettings.setDomStorageEnabled(true);
-        //配置权限
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onReceivedIcon(WebView view, Bitmap icon) {
-                super.onReceivedIcon(view, icon);
-            }
-
-            @Override
-            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                callback.invoke(origin, true, false);
-                super.onGeolocationPermissionsShowPrompt(origin, callback);
-            }
-        });
+        // 修改ua使得web端正确判断
+        String ua = webSettings.getUserAgentString();
+        webSettings.setUserAgentString(ua+" MicroMessenger/6.6.5.1280(0x26060532)");
         webView.setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading(WebView view, String url) { // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
-                view.loadUrl(url);
-                return true;
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
             }
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+//            webView.goBack();// 返回前一个页面
+//            return true;
+//        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         finishAll();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
 
@@ -98,5 +93,4 @@ public class MainActivity extends BaseActivity {
     protected void getIntentData() {
 
     }
-
 }
