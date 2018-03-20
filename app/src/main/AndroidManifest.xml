@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="www.dugaolong.com.xianshishigongjiao">
+    package="cn.zcl.www.xagj">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -16,14 +16,14 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        android:name=".MyApplication"
+        android:name="cn.zcl.www.xagj.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.NoTitleBar">
 
-        <activity android:name=".MainActivity"
+        <activity android:name="cn.zcl.www.xagj.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
