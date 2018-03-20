@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-
-import com.xiaomi.ad.SplashAdListener;
-import com.xiaomi.ad.adView.SplashAd;
 
 
 /**
@@ -41,7 +37,7 @@ public class MainActivity extends BaseActivity {
 //    private static final String POSITION_ID = "be5546ea85bd8f879bebcf1aaea0c401";
 //    private static final String POSITION_ID = "6d3d1a7b95d5be2bc8171fc05231ccf2";//1306
 //    private static final String POSITION_ID = "4b485fd9e3e27549417817e03e531a43";//256
-    private static final String POSITION_ID = "21a12924fb79381ad51b842a11c86b2d";//3108
+//    private static final String POSITION_ID = "21a12924fb79381ad51b842a11c86b2d";//3108
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,32 +51,6 @@ public class MainActivity extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
 
-        mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
-        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
-            @Override
-            public void onAdPresent() {
-                // 开屏广告展示
-                Log.d(TAG, "onAdPresent");
-            }
-
-            @Override
-            public void onAdClick() {
-                //用户点击了开屏广告
-                Log.d(TAG, "onAdClick");
-            }
-
-            @Override
-            public void onAdDismissed() {
-                //这个方法被调用时，表示从开屏广告消失。
-                Log.d(TAG, "onAdDismissed");
-            }
-
-            @Override
-            public void onAdFailed(String s) {
-                Log.d(TAG, "onAdFailed, message: " + s);
-            }
-        });
-        splashAd.requestAd(POSITION_ID);
     }
 
     private void initView() {
