@@ -5,7 +5,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-
-import com.xiaomi.ad.SplashAdListener;
-import com.xiaomi.ad.adView.SplashAd;
 
 
 /**
@@ -31,17 +28,19 @@ public class MainActivity extends BaseActivity {
 
     private Context mContext;
     private WebView webView;//系统自带的WebView
-    private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
-    LinearLayout ll_tencent;
+//    private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
+    private String url = "https://www.xajtfb.cn/BusPage/bus_realtime";
+//    LinearLayout ll_tencent;
     private ViewGroup mContainer;
     private static final String TAG = "MainActivity";
     //以下的POSITION_ID 需要使用您申请的值替换下面内容
-//    private static final String POSITION_ID = "bcaa805adf045251f7bc7f815d0874b5";
-//    private static final String POSITION_ID = "23d0920bcc08db5c1d5bc40a66993b0c";
-//    private static final String POSITION_ID = "be5546ea85bd8f879bebcf1aaea0c401";
-//    private static final String POSITION_ID = "6d3d1a7b95d5be2bc8171fc05231ccf2";//1306
-//    private static final String POSITION_ID = "4b485fd9e3e27549417817e03e531a43";//256
-    private static final String POSITION_ID = "21a12924fb79381ad51b842a11c86b2d";//3108
+//    private static final String POSITION_ID  "21a12924fb79381ad51b842a11c86b2d";//3108
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            mContainer.setVisibility(View.GONE);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,41 +49,53 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.webview_layout);
         super.hideTitle(0);
 
-
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
 
         mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
-        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
-            @Override
-            public void onAdPresent() {
-                // 开屏广告展示
-                Log.d(TAG, "onAdPresent");
-            }
+        mContainer.setBackgroundResource(R.drawable.splash_default_picture);
+        //5秒以后图片消失
+        countDown();
 
-            @Override
-            public void onAdClick() {
-                //用户点击了开屏广告
-                Log.d(TAG, "onAdClick");
-            }
+//        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
+//            @Override
+//            public void onAdPresent() {
+//                // 开屏广告展示
+//                Log.d(TAG, "onAdPresent");
+//            }
+//
+//            @Override
+//            public void onAdClick() {
+//                //用户点击了开屏广告
+//                Log.d(TAG, "onAdClick");
+//            }
+//
+//            @Override
+//            public void onAdDismissed() {
+//                //这个方法被调用时，表示从开屏广告消失。
+//                Log.d(TAG, "onAdDismissed");
+//            }
+//
+//            @Override
+//            public void onAdFailed(String s) {
+//                Log.d(TAG, "onAdFailed, message: " + s);
+//            }
+//        });
+//        splashAd.requestAd(POSITION_ID);
+    }
 
+    private void countDown() {
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onAdDismissed() {
-                //这个方法被调用时，表示从开屏广告消失。
-                Log.d(TAG, "onAdDismissed");
+            public void run() {
+                handler.sendEmptyMessage(0);
             }
-
-            @Override
-            public void onAdFailed(String s) {
-                Log.d(TAG, "onAdFailed, message: " + s);
-            }
-        });
-        splashAd.requestAd(POSITION_ID);
+        },2000);
     }
 
     private void initView() {
-        ll_tencent = (LinearLayout) findViewById(R.id.ll_tencent);
+//        ll_tencent = (LinearLayout) findViewById(ll_tencent);
         webView = (WebView) findViewById(R.id.webview);
         webView.loadUrl(url);
         WebSettings webSettings = webView.getSettings();
@@ -99,6 +110,9 @@ public class MainActivity extends BaseActivity {
         webSettings.setGeolocationEnabled(true);
         //开启DomStorage缓存
         webSettings.setDomStorageEnabled(true);
+        // 修改ua使得web端正确判断
+        String ua = webSettings.getUserAgentString();
+        webSettings.setUserAgentString(ua+" MicroMessenger/6.6.5.1280(0x26060532)");
         //配置权限
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -132,12 +146,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            // 捕获back键，在展示广告期间按back键，不跳过广告
-            if (mContainer.getVisibility() == View.VISIBLE) {
-                return true;
-            }
-        }
+//        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+//            // 捕获back键，在展示广告期间按back键，不跳过广告
+//            if (mContainer.getVisibility() == View.VISIBLE) {
+//                return true;
+//            }
+//        }
         return super.dispatchKeyEvent(event);
     }
 
