@@ -4,6 +4,7 @@ package www.dugaolong.com.xianshishigongjiao;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Created by dugaolong on 17/3/13.
@@ -28,7 +32,7 @@ public class MainActivity extends BaseActivity {
 
     private Context mContext;
     private WebView webView;//系统自带的WebView
-//    private String url = "http://www.xaglkp.com.cn/BusPage/bus_realtime?from=groupmessage&isappinstalled=0";
+//    private String url = "https://www.xajtfb.cn/BusPage/bus_line";
     private String url = "https://www.xajtfb.cn/BusPage/bus_realtime";
 //    LinearLayout ll_tencent;
     private ViewGroup mContainer;
@@ -55,8 +59,8 @@ public class MainActivity extends BaseActivity {
 
         mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
         mContainer.setBackgroundResource(R.drawable.splash_default_picture);
-        //5秒以后图片消失
-        countDown();
+
+
 
 //        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
 //            @Override
@@ -91,13 +95,13 @@ public class MainActivity extends BaseActivity {
             public void run() {
                 handler.sendEmptyMessage(0);
             }
-        },2000);
+        },3000);
     }
 
     private void initView() {
 //        ll_tencent = (LinearLayout) findViewById(ll_tencent);
         webView = (WebView) findViewById(R.id.webview);
-        webView.loadUrl(url);
+//        webView.loadUrl(url);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSavePassword(true);
@@ -110,9 +114,17 @@ public class MainActivity extends BaseActivity {
         webSettings.setGeolocationEnabled(true);
         //开启DomStorage缓存
         webSettings.setDomStorageEnabled(true);
+        //HTTP 和 HTTPS 混合调用
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         // 修改ua使得web端正确判断
         String ua = webSettings.getUserAgentString();
         webSettings.setUserAgentString(ua+" MicroMessenger/6.6.5.1280(0x26060532)");
+        Map extraHeaders = new HashMap();
+        extraHeaders.put("Referer", "https://www.xajtfb.cn/Defaultm/Transportation");
+        webView.loadUrl(url, extraHeaders);
+
         //配置权限
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -128,7 +140,11 @@ public class MainActivity extends BaseActivity {
         });
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) { // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
-                view.loadUrl(url);
+//                view.loadUrl(url);
+//                Log.d(TAG, "url==="+url);
+                Map extraHeaders = new HashMap();
+                extraHeaders.put("Referer", "https://www.xajtfb.cn/Defaultm/Transportation");
+                view.loadUrl(url, extraHeaders);
                 return true;
             }
         });
@@ -165,6 +181,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        //判断网络是否可用
+        if(NetUtil.detectNetStatus(this)){
+            //2秒以后图片消失
+            countDown();
+        }else {
+            NetUtil.setNetwork(this);
+        }
     }
 
 
