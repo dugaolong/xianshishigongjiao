@@ -4,13 +4,18 @@ package www.dugaolong.com.xianshishigongjiao;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.widget.LinearLayout;
 
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by dugaolong on 17/3/13.
@@ -41,18 +46,30 @@ public class MainActivity extends BaseActivity {
     private void initView() {
         ll_tencent = (LinearLayout) findViewById(R.id.ll_tencent);
         webView = (com.tencent.smtt.sdk.WebView)findViewById(R.id.tbsContent);
-        webView.loadUrl(url);
+//        webView.loadUrl(url);
         com.tencent.smtt.sdk.WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSavePassword(true);
         webSettings.setGeolocationEnabled(true);
+        //HTTP 和 HTTPS 混合调用
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         // 修改ua使得web端正确判断
         String ua = webSettings.getUserAgentString();
         webSettings.setUserAgentString(ua+" MicroMessenger/6.6.5.1280(0x26060532)");
+        Map extraHeaders = new HashMap();
+        extraHeaders.put("Referer", "https://www.xajtfb.cn/Defaultm/Transportation");
+        webView.loadUrl(url, extraHeaders);
+
         webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
+            public boolean shouldOverrideUrlLoading(WebView view, String url) { // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
+//                view.loadUrl(url);
+//                Log.d(TAG, "url==="+url);
+                Map extraHeaders = new HashMap();
+                extraHeaders.put("Referer", "https://www.xajtfb.cn/Defaultm/Transportation");
+                view.loadUrl(url, extraHeaders);
+                return true;
             }
         });
     }
