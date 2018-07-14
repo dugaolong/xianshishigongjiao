@@ -1,4 +1,4 @@
-package com.dgl.www.xagj;
+package www.dgl.com.xagj;
 
 import android.app.Application;
 import android.content.Context;

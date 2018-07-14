@@ -1,15 +1,17 @@
-package com.dgl.www.xagj;
-
+package www.dgl.com.xagj;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
-import android.widget.LinearLayout;
 
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -21,16 +23,20 @@ import java.util.Map;
  * Created by dugaolong on 17/3/13.
  */
 
-
-
 public class MainActivity extends BaseActivity {
 
     private Context mContext;
     com.tencent.smtt.sdk.WebView webView;//腾讯X5WebView
     private String url = "https://www.xajtfb.cn/BusPage/bus_realtime";
     Runnable runnableClose=null;
-    LinearLayout ll_tencent;
     Dialog dialog ;
+    private ViewGroup mContainer;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            mContainer.setVisibility(View.GONE);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +47,12 @@ public class MainActivity extends BaseActivity {
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
+        mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
+        mContainer.setBackgroundResource(R.drawable.splash_default_picture);
     }
 
     private void initView() {
-        ll_tencent = (LinearLayout) findViewById(R.id.ll_tencent);
+
         webView = (com.tencent.smtt.sdk.WebView)findViewById(R.id.tbsContent);
 //        webView.loadUrl(url);
         com.tencent.smtt.sdk.WebSettings webSettings = webView.getSettings();
@@ -89,12 +97,26 @@ public class MainActivity extends BaseActivity {
         finishAll();
     }
 
-
+    private void countDown() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(0);
+            }
+        },3000);
+    }
     @Override
     protected void onResume() {
         super.onResume();
-    }
 
+        //判断网络是否可用
+        if(NetUtil.detectNetStatus(this)){
+            //2秒以后图片消失
+            countDown();
+        }else {
+            NetUtil.setNetwork(this);
+        }
+    }
 
     @Override
     protected void findWidgets() {
