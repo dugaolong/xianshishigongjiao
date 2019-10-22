@@ -3,6 +3,7 @@ package www.dugaolong.com.xianshishigongjiao;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.security.MessageDigest;
+import java.util.Locale;
 
 
 /**
@@ -146,6 +150,31 @@ public abstract class BaseActivity extends AppCompatActivity
         String runningActivityName = MyApplication.getInstance().getRunningActivityName();
         Log.i("currentActivity:", "当前所在的Activity为:" + runningActivityName);
     }
+
+//    public static String sHA1(Context context) {
+//        String result= "";
+//        try {
+//            PackageInfo info = context.getPackageManager().getPackageInfo(
+//                    context.getPackageName(), PackageManager.GET_SIGNATURES);
+//            byte[] cert = info.signatures[0].toByteArray();
+//            MessageDigest md = MessageDigest.getInstance("SHA1");
+//            byte[] publicKey = md.digest(cert);
+//            StringBuffer hexString = new StringBuffer();
+//            for (int i = 0; i < publicKey.length; i++) {
+//                String appendString = Integer.toHexString(0xFF & publicKey[i])
+//                        .toUpperCase(Locale.US);
+//                if (appendString.length() == 1)
+//                    hexString.append("0");
+//                hexString.append(appendString);
+//                hexString.append(":");
+//            }
+//            result=hexString.toString();
+//            return result.substring(0, result.length()-1);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 
     /**
      * 设置内容区域

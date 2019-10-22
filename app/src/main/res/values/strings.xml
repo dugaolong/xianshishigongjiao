@@ -16,4 +16,10 @@
     <!--<string name="title_activity_native_video_recycler_view">原生视频广告-RecyclerView示例</string>-->
     <!--<string name="title_activity_native_video_scroll_view">原生视频广告-ScrollView示例</string>-->
     <!--<string name="title_activity_native_video_pre_movie">原生视频广告-前贴片示例</string>-->
+
+    <string name="refused_storage_tip">请在设置中开启存储空间、定位权限，以正常使用西安公交功能</string>
+    <string name="refused_phone_state_tip">西安公交使用定位权限确定本机位置。\n
+        请在设置中开启定位权限，以正常使用应用功能</string>
+    <string name="toast_app_crash">应用遇到问题，即将关闭，请重新开启。</string>
+
 </resources>

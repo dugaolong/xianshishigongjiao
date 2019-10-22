@@ -9,14 +9,14 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "www.dugaolong.com.xianshishigongjiao"
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 10
-        versionName "5.1"
+        targetSdkVersion 26
+        versionCode 11
+        versionName "5.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -32,9 +32,6 @@ android {
             assets.srcDirs = ['assets']
         }
 
-        // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
-
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
@@ -43,25 +40,30 @@ android {
      * 配置生成的apk打包的名称
      */
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                if (variant.buildType.name.equals('debug')){
-                    def fileName = "tencent_debug.apk"
-                    output.outputFile = new File(outputFile.parent, fileName)
-                }else {
-                    // 输出apk名称为HeJiaoYu_GD_XXX.apk
-                    def fileName = "tencent_release.apk"
-                    output.outputFile = new File(outputFile.parent, fileName)
-                }
-            }
+        variant.outputs.all { output ->
+            outputFileName=" ${variant.applicationId}-${ buildType.name}-${defaultConfig.versionName}-${ defaultConfig.versionCode }.apk"
         }
     }
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            def outputFile = output.outputFile
+//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                if (variant.buildType.name.equals('debug')){
+//                    def fileName = "tencent_debug.apk"
+//                    output.outputFile = new File(outputFile.parent, fileName)
+//                }else {
+//                    // 输出apk名称为HeJiaoYu_GD_XXX.apk
+//                    def fileName = "tencent_release.apk"
+//                    output.outputFile = new File(outputFile.parent, fileName)
+//                }
+//            }
+//        }
+//    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.2.0'
-
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'pub.devrel:easypermissions:2.0.1'
 }
 
