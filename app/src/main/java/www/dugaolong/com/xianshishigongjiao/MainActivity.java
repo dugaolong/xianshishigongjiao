@@ -1,6 +1,7 @@
 package www.dugaolong.com.xianshishigongjiao;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -19,14 +20,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 
 /**
  * Created by dugaolong on 17/3/13.
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
 //        implements ActivityCompat.OnRequestPermissionsResultCallback{
 
 
@@ -46,6 +51,12 @@ public class MainActivity extends BaseActivity {
         }
     };
 
+    String[] request_perms = {Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private int RC_CAMERA=0;
+    private static final int RC_STORAGE_PHONE_STATE = 100;//手机状态,存储
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +71,7 @@ public class MainActivity extends BaseActivity {
         mContainer = (ViewGroup) findViewById(R.id.splash_ad_container);
         mContainer.setBackgroundResource(R.drawable.splash_default_picture);
 
-
+        requestBasicPermission();
 
 //        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
 //            @Override
@@ -89,6 +100,16 @@ public class MainActivity extends BaseActivity {
 //        splashAd.requestAd(POSITION_ID);
     }
 
+    @AfterPermissionGranted(RC_STORAGE_PHONE_STATE)
+    private void requestBasicPermission()
+    {
+        if (EasyPermissions.hasPermissions(this, request_perms)) {
+//            initData();
+        } else {
+            EasyPermissions.requestPermissions(this, "需要获取存储和手机识别码权限",
+                    RC_STORAGE_PHONE_STATE, request_perms);
+        }
+    }
     private void countDown() {
         handler.postDelayed(new Runnable() {
             @Override
@@ -204,6 +225,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void getIntentData() {
+
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
 
     }
 }

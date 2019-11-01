@@ -9,14 +9,14 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "www.dugaolong.com.xianshishigongjiao"
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 10
-        versionName "5.1"
+        targetSdkVersion 26
+        versionCode 11
+        versionName "5.2"
     }
     buildTypes {
         release {
@@ -32,7 +32,7 @@ android {
         }
 
         // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
+//        instrumentTest.setRoot('tests')
 
         // Move the build types to build-types/<type>
         // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
@@ -47,26 +47,27 @@ android {
     /**
      * 配置生成的apk打包的名称
      */
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                if (variant.buildType.name.equals('debug')){
-                    def fileName = "xiangongjiao_debug.apk"
-                    output.outputFile = new File(outputFile.parent, fileName)
-                }else {
-                    // 输出apk名称为HeJiaoYu_GD_XXX.apk
-                    def fileName = "xiaomi_release.apk"
-                    output.outputFile = new File(outputFile.parent, fileName)
-                }
-            }
-        }
-    }
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            def outputFile = output.outputFile
+//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                if (variant.buildType.name.equals('debug')){
+//                    def fileName = "xiangongjiao_debug.apk"
+//                    output.outputFile = new File(outputFile.parent, fileName)
+//                }else {
+//                    // 输出apk名称为HeJiaoYu_GD_XXX.apk
+//                    def fileName = "xiaomi_release.apk"
+//                    output.outputFile = new File(outputFile.parent, fileName)
+//                }
+//            }
+//        }
+//    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.2.0'
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'pub.devrel:easypermissions:0.4.2'
 
 //    compile files('libs/AdSdk.jar')
 }
