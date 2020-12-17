@@ -7,4 +7,20 @@
     <!--按下效果-->
     <color name="pressed_item">#e9e9f9</color>
     <color name="app_theme_color">#2196F3</color>
+    <color name="app_theme_txt_color">#577A96</color>
+
+    <!-- 升级 -->
+    <color name="updata_text_color_E5">#E5E6E6</color>
+    <color name="updata_text_color_59">#595757</color>
+    <color name="updata_text_color_22">#221814</color>
+    <color name="line_color">#C8C9C9</color>
+    <color name="hint_color">#CFCED4</color>
+    <color name="text_color_89">#898989</color>
+    <color name="public_line_eo">#E0E0E0</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="black_color">#232323</color>
+
+
+
 </resources>

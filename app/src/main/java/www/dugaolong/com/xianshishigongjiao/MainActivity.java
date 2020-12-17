@@ -3,12 +3,14 @@ package www.dugaolong.com.xianshishigongjiao;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,8 @@ import java.util.Map;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+import www.dugaolong.com.xianshishigongjiao.utils.DialogTipsUtil;
+import www.dugaolong.com.xianshishigongjiao.utils.NetUtil;
 
 
 /**
@@ -55,6 +59,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private int RC_CAMERA=0;
     private static final int RC_STORAGE_PHONE_STATE = 100;//手机状态,存储
+    private MyApplication application;
+    private SharedPreferences preference;
+    public static final String HAS_SHOW_PRIVACY_POLICY = "privacy_policy";//隐私政策
+    private boolean has_show_privacy_policy;
 
 
     @Override
@@ -63,7 +71,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         mContext = this;
         setContentView(R.layout.webview_layout);
         super.hideTitle(0);
-
+        preference = PreferenceManager.getDefaultSharedPreferences(this);
         getWindow().setFormat(PixelFormat.TRANSLUCENT);//（这个对宿主没什么影响，建议声明）
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
@@ -72,7 +80,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         mContainer.setBackgroundResource(R.drawable.splash_default_picture);
 
         requestBasicPermission();
-
+        checkshowPrivate();
 //        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
 //            @Override
 //            public void onAdPresent() {
@@ -98,6 +106,47 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 //            }
 //        });
 //        splashAd.requestAd(POSITION_ID);
+    }
+    /*判断是否第一次登陆APP.
+     */
+    private void checkshowPrivate() {
+        has_show_privacy_policy = preference.getBoolean(HAS_SHOW_PRIVACY_POLICY, false);
+        if (!has_show_privacy_policy) {
+            showPrivatePolicy();
+        }
+    }
+
+    /**
+     * 显示隐私政策
+     */
+    private void showPrivatePolicy() {
+        DialogTipsUtil.showPrivate(2, this, "隐私政策", this.getString(R.string.private_policy_content), "同意", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogTipsUtil.dialog.dismiss();
+                //保存已经同意"隐私政策标记
+                preference.edit().putBoolean(HAS_SHOW_PRIVACY_POLICY, true).apply();
+            }
+        }, "不同意", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //退出登录,关掉所有页面
+               finishAll();
+                //退出APP
+                exitApp();
+            }
+        });
+    }
+
+    /**
+     * 退出应用程序
+     */
+    public void exitApp() {
+        try {
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
+        } catch (Exception e) {
+        }
     }
 
     @AfterPermissionGranted(RC_STORAGE_PHONE_STATE)
@@ -212,21 +261,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         }
     }
 
-
-    @Override
-    protected void findWidgets() {
-
-    }
-
-    @Override
-    protected void initComponent() {
-
-    }
-
-    @Override
-    protected void getIntentData() {
-
-    }
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {

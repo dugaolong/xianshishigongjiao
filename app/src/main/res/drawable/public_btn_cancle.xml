@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+
+            <!-- 填充的颜色 -->
+            <corners android:bottomLeftRadius="@dimen/dimen_10" android:bottomRightRadius="0dp" android:topLeftRadius="0dp" android:topRightRadius="0dp" />
+
+            <!-- android:radius 弧形的半径 -->
+            <solid android:color="#FFFFFF"></solid>
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:bottomLeftRadius="@dimen/dimen_10" android:bottomRightRadius="0dp" android:topLeftRadius="0dp" android:topRightRadius="0dp" />
+
+            <solid android:color="#E0E0E0" />
+        </shape>
+    </item>
+
+</selector>

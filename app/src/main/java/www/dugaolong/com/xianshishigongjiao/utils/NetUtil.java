@@ -1,4 +1,4 @@
-package www.dugaolong.com.xianshishigongjiao;
+package www.dugaolong.com.xianshishigongjiao.utils;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -10,6 +10,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
+import www.dugaolong.com.xianshishigongjiao.R;
 
 
 /**

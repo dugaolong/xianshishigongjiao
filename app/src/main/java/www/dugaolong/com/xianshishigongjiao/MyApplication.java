@@ -23,6 +23,8 @@ public class MyApplication extends Application {
     public static MyApplication instance;
     private Bitmap screenShot;
     String TAG = "MyApplication";
+    private String versionName;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -61,48 +63,34 @@ public class MyApplication extends Application {
         return mActivityManager.getRunningTasks(1).get(0).topActivity.getClassName();
     }
 
-
-    //检查apk的哈希值
-    public int checkAPP(Context context) {
+    /**
+     * 获取App安装包信息
+     *
+     * @return
+     */
+    public PackageInfo getPackageInfo() {
+        PackageInfo info = null;
         try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(),
-                            PackageManager.GET_SIGNATURES);
-            Signature[] signs = packageInfo.signatures;
-            Signature sign = signs[0];
-
-            int hashcode = sign.hashCode();
-            Log.i("test", "hashCode : " + hashcode);
-            return hashcode == -82892576 ? 1 : 0;
+            info = getPackageManager().getPackageInfo(getPackageName(), 0);
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
-        return -1;
+        if (info == null) {
+            info = new PackageInfo();
+        }
+        return info;
     }
-    //debug默认签名中含有的信息
-    private final static X500Principal DEBUG_DN = new X500Principal("CN=Android Debug,O=Android,C=US");
-
-    //判断是否是debug版本，用来数据库加密和log自动判断,true表示debug版本，false表示release版本
-    public boolean isDebuggable(Context ctx) {
-        boolean debuggable = false;
-        try {
-            PackageInfo pinfo = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), PackageManager.GET_SIGNATURES);
-            Signature signatures[] = pinfo.signatures;
-            for (int i = 0; i < signatures.length; i++) {
-                CertificateFactory cf = CertificateFactory.getInstance("X.509");
-                ByteArrayInputStream stream = new ByteArrayInputStream(signatures[i].toByteArray());
-                X509Certificate cert = (X509Certificate) cf.generateCertificate(stream);
-                // 判断是否含有debug默认的签名信息
-                debuggable = cert.getSubjectX500Principal().equals(DEBUG_DN);
-                if (debuggable) {
-                    break;
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-        } catch (CertificateException e) {
-            e.printStackTrace();
+    /**
+     * 获取版本号
+     *
+     * @return
+     */
+    public String getVersionName() {
+        if (versionName == null) {
+            PackageInfo packageInfo = this.getPackageInfo();
+            versionName = packageInfo.versionName;
         }
-        return debuggable;
+        return versionName;
     }
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="www.dugaolong.com.xianshishigongjiao">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -32,7 +33,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PublicWebActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="AppLinkUrlError">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- xagj://webview:9999?url=300 打开隐私政策 -->
+                <data
+                    android:host="webview"
+                    android:port="9999"
+                    android:scheme="xagj" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.xiaomi.ad.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"

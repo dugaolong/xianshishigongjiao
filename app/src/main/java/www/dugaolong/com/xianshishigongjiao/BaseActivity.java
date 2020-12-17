@@ -41,20 +41,6 @@ public abstract class BaseActivity extends AppCompatActivity
     protected int screenWidth;
     protected int screenHeight;
 
-    /**
-     * 初始化控件
-     */
-    protected abstract void findWidgets();
-
-    /**
-     * 初始化控件数据
-     */
-    protected abstract void initComponent();
-
-    /**
-     * 初始化数据
-     */
-    protected abstract void getIntentData();
 
     /**
      * 标题栏标题
@@ -162,12 +148,6 @@ public abstract class BaseActivity extends AppCompatActivity
         if (null != this.base_content) {
             this.base_content.addView(this.contentView);
         }
-        getIntentData();
-        findWidgets();
-        initComponent();
-        initListener();
-        initHandler();
-        asyncRetrive();
     }
 
     private void init() {
@@ -210,38 +190,7 @@ public abstract class BaseActivity extends AppCompatActivity
         ActivityManager.getAppManager().finishActivity(this);
     }
 
-    /**
-     * 初始化控件
-     *
-     * @param id
-     * @param <T>
-     * @return
-     */
-    protected <T> T findView(int id) {
-        return (T) findViewById(id);
-    }
 
-    /**
-     * 初始化Listener，子类根据需要自行重写
-     */
-    protected void initListener() {
-        return;
-    }
-
-    /**
-     * 初始化Handler，子类根据需要自行重写
-     */
-    protected void initHandler() {
-        return;
-    }
-
-
-    /**
-     * 异步查询网络数据，子类根据需要自行重写
-     */
-    protected void asyncRetrive() {
-        return;
-    }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -289,4 +238,6 @@ public abstract class BaseActivity extends AppCompatActivity
             default:
         }
     }
+
+
 }
